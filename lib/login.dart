@@ -21,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => HomePage(isAdmin: true),
+          builder: (context) => HomePage(userRole: 'admin',),
         ),
       );
     } else if (username == 'user' && password == 'user123') {
@@ -29,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => HomePage(isAdmin: false),
+          builder: (context) => HomePage(userRole: 'user')
         ),
       );
     }
@@ -38,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => HomePage(isAdmin: false),
+           builder: (context) => HomePage(userRole: 'pegawai'), // Set role pegawai
         ),
       );
     } else {

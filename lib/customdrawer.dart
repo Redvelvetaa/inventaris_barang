@@ -3,104 +3,81 @@ import 'package:inventaris_barang/tampilbarang.dart';
 import 'login.dart'; // Pastikan halaman login diimport agar bisa diarahkan ke login page
 
 class CustomDrawer extends StatelessWidget {
-  final bool isAdmin;
-  const CustomDrawer({super.key, required this.isAdmin});
+  final String userRole; // Bisa "admin", "pegawai", atau "user"
+  CustomDrawer({required this.userRole});
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
-          const DrawerHeader(
-            decoration: BoxDecoration(
-              color: Colors.blue,
-            ),
-            child: Text('Menu',
-                style: TextStyle(color: Colors.white, fontSize: 24)),
+          DrawerHeader(
+            child: Text('Menu', style: TextStyle(color: Colors.white, fontSize: 24)),
+            decoration: BoxDecoration(color: Colors.blue),
           ),
           ListTile(
-            title: const Text('Home'),
+            title: Text('Home'),
             onTap: () {
               Navigator.pop(context);
             },
           ),
-          if (isAdmin) ...[
+          if (userRole == 'admin') ...[
             ListTile(
-              title: const Text('Manage Barang'),
+              title: Text('Manage Barang'),
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          BarangList()), //Navigasi ke halaman ProductPage
-                );
+                Navigator.push(context, MaterialPageRoute(builder: (context) => BarangList()));
               },
             ),
             ListTile(
-              title: const Text('Manage Pegawai'),
+              title: Text('Manage Pegawai'),
               onTap: () {
                 Navigator.pop(context);
               },
             ),
             ListTile(
-              title: const Text('Manage Users'),
+              title: Text('Manage Users'),
               onTap: () {
                 Navigator.pop(context);
               },
             ),
-          ] else ...[ //side bar untuk user-yog
+          ] else if (userRole == 'pegawai') ...[
             ListTile(
-              title: const Text('Daftar Barang'),
+              title: Text('Daftar Barang'),
               onTap: () {
                 Navigator.pop(context);
               },
             ),
             ListTile(
-              title: const Text('Pinjam Barang'),
+              title: Text('Pinjam Barang'),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+          ] else ...[
+            ListTile(
+              title: Text('Daftar Barang'),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: Text('Pinjam Barang'),
               onTap: () {
                 Navigator.pop(context);
               },
             ),
           ],
           ListTile(
-            title: const Text('Profile'),
+            title: Text('Profile'),
             onTap: () {
               Navigator.pop(context);
             },
           ),
           ListTile(
-            title: const Text('Log out'),
+            title: Text('Log out'),
             onTap: () {
-              // Menampilkan dialog konfirmasi untuk logout
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    title: const Text('Konfirmasi'),
-                    content: const Text('Apakah Anda yakin ingin logout?'),
-                    actions: <Widget>[
-                      TextButton(
-                        child: const Text('Batal'),
-                        onPressed: () {
-                          Navigator.pop(context); // Tutup dialog
-                        },
-                      ),
-                      TextButton(
-                        child: const Text('Log out'),
-                        onPressed: () {
-                          Navigator.pop(context); // Tutup dialog
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    LoginPage()), // Kembali ke login page
-                          );
-                        },
-                      ),
-                    ],
-                  );
-                },
-              );
+              // Tampilkan dialog konfirmasi logout
             },
           ),
         ],

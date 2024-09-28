@@ -2,18 +2,25 @@ import 'package:flutter/material.dart';
 import 'customdrawer.dart';
 
 class HomePage extends StatelessWidget {
-  final bool isAdmin;
-  const HomePage({super.key, required this.isAdmin});
+  final String userRole; // Ganti bool isAdmin dengan String userRole
+  
+  HomePage({required this.userRole});
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home Page'),
+        title: Text('Home Page'),
       ),
-      drawer: CustomDrawer(isAdmin: isAdmin),
+      drawer: CustomDrawer(userRole: userRole), // Kirim userRole ke CustomDrawer
       body: Center(
-        child: Text(isAdmin ? 'Welcome, Admin!' : 'Welcome, User!'),
+        child: Text(userRole == 'admin' 
+            ? 'Welcome, Admin!' 
+            : userRole == 'pegawai' 
+            ? 'Welcome, Pegawai!' 
+            : 'Welcome, User!'),
       ),
     );
   }
 }
+
